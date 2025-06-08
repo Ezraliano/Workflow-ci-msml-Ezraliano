@@ -1,0 +1,14 @@
+name: crop-recommendation-env
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.12
+  - pip
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - pip:
+      - mlflow
