@@ -1,0 +1,10 @@
+name: crop-recommendation-mlflow
+
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+      dataset_path: {type: string, default: "data/Crop_recommendation_clean.csv"}
+    command: >
+      python modelling.py --dataset_path {dataset_path}
