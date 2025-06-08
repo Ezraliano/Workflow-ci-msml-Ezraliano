@@ -12,12 +12,12 @@ import warnings
 # Suppress warning agar log bersih
 warnings.filterwarnings("ignore")
 
-# --- Ambil argumen dari CLI (MLflow akan inject ini via MLproject) ---
+#  Ambil argumen dari CLI (MLflow akan inject ini via MLproject) 
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataset_path", type=str, default="./Crop_recommendation_prepocessing.csv")
 args = parser.parse_args()
 
-# --- Tracking URI untuk MLflow ---
+#  Tracking URI untuk MLflow 
 MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000")
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 
