@@ -25,6 +25,7 @@ jobs:
 
       - name: Run MLflow project
         run: |
+          mkdir -p MLProject
           cd MLProject
           mlflow run . --env-manager=local
 
