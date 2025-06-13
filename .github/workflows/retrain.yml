@@ -1,7 +1,7 @@
 name: Retrain ML Model with MLflow Project
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   push:
     branches: [ main ]
 
@@ -10,31 +10,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout workflow-CI repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Set up Python 3.12 (with Conda) 
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install dependencies (conda)
+      - name: Conda Init and Setup 
+        shell: bash -l {0} 
         run: |
-          python -m pip install --upgrade pip
-          # Karena MLProject Anda menggunakan conda.yaml (yang diasumsikan akan diurus oleh mlflow run),
-          # dan Anda menginstal pandas, numpy, scikit-learn secara global,
-          # ini mungkin tidak optimal jika ada konflik lingkungan.
-          # Untuk saat ini, biarkan seperti ini, tapi perlu diingat.
-          pip install mlflow scikit-learn pandas numpy matplotlib
+          conda update -n base -c defaults conda --yes
+          conda clean --all --yes
+          conda config --set channel_priority strict
+          echo "Conda version: $(conda --version)" # Debugging: cek versi conda
 
-      - name: Run MLflow project # <-- Perbaikan ada di sini
+      - name: Install MLflow Project dependencies 
         run: |
-          # Perintah ini sekarang menjalankan MLflow Project dari sub-direktori 'MLProject'
-          mlflow run MLProject --env-manager=local # <-- UBAH DARI '.' MENJADI 'MLProject'
+          cd MLProject
+          conda env create -f conda.yaml # Buat lingkungan dari conda.yaml
+          pip install mlflow # Ini akan menginstal mlflow ke lingkungan Python yang disiapkan oleh setup-python.
+
+      - name: Run MLflow project
+        run: |
+          mlflow run MLProject --env-manager=local # <-- Ini sudah benar sekarang
 
       - name: Upload model artifacts
         uses: actions/upload-artifact@v4
         with:
           name: trained-model
-          # Jika mlflow run MLProject dijalankan, maka folder mlruns akan dibuat di dalam 'MLProject'.
-          path: MLProject/mlruns # <-- SESUAIKAN PATH ARTIFAK
+          path: MLProject/mlruns 
