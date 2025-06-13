@@ -33,7 +33,7 @@ jobs:
 
       - name: Run MLflow project
         run: |
-          mlflow run ./MLProject --env-manager=local
+          mlflow run MLProject --env-manager=local
 
       - name: Upload model artifacts
         uses: actions/upload-artifact@v4
