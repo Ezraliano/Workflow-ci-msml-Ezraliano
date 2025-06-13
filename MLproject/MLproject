@@ -7,4 +7,4 @@ entry_points:
     parameters:
       dataset_path: {type: string, default: "Crop_recommendation_prepocessing.csv"} 
     command: >
-      python modelling.py --dataset_path {dataset_path}
+      python modelling.py 
