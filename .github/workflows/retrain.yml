@@ -28,16 +28,16 @@ jobs:
 
       - name: Install MLflow Project dependencies 
         run: |
-          cd ./MLProject
+          cd ./MLproject
           conda env create -f conda.yaml 
           pip install mlflow 
 
       - name: Run MLflow project
         run: |
-          mlflow run MLProject --env-manager=local 
+          mlflow run MLproject --env-manager=local 
 
       - name: Upload model artifacts
         uses: actions/upload-artifact@v4
         with:
           name: trained-model
-          path: MLProject/mlruns 
+          path: MLproject/mlruns 
